@@ -9,9 +9,9 @@ class Empirica < Formula
   include Language::Python::Virtualenv
 
   desc "Epistemic self-assessment framework for AI agents"
-  homepage "https://github.com/nubaeon/empirica"
-  url "https://files.pythonhosted.org/packages/source/e/empirica/empirica-1.2.0.tar.gz"
-  sha256 "552fa8b19424e41bce1958a1f76a9f57c48073b20f522c012f6e5a6278775cd8"
+  homepage "https://github.com/Nubaeon/empirica"
+  url "https://files.pythonhosted.org/packages/source/e/empirica/empirica-1.3.0.tar.gz"
+  sha256 "57b9efe042ea552725be88c96f0a4291e3a2b8c4fcb0aa5fc616ecc9f5189040"
   license "MIT"
 
   depends_on "python@3.11"
@@ -28,25 +28,17 @@ class Empirica < Formula
   end
 
   resource "pydantic" do
-    url "https://files.pythonhosted.org/packages/source/p/pydantic/pydantic-2.5.0.tar.gz"
-    sha256 "0b8be5413c06aadfbe80e3ec8b2f32d9f94e2d6ce8a8f8e3f7d5a3c0b0e7f0a0"
+    url "https://files.pythonhosted.org/packages/source/p/pydantic/pydantic-2.5.3.tar.gz"
+    sha256 "b3ef57c62535b0941697cce638c08f891e2a71f035e8b5f8234eb41e1b1c6b91"
   end
 
   def install
     virtualenv_install_with_resources
-
-    # Install YAML configs and docs
-    (libexec/"config").install Dir["empirica/config/*.yaml"]
-    (libexec/"docs").install Dir["docs/system-prompts/*"]
-    (libexec/"docs").install Dir["docs/skills/*"]
   end
 
   test do
     # Test that the CLI works
-    assert_match "1.2.0", shell_output("#{bin}/empirica --version")
-
-    # Test that bootstrap command exists
-    system "#{bin}/empirica", "bootstrap", "--help"
+    assert_match "1.3.0", shell_output("#{bin}/empirica --version")
 
     # Test Python import
     system Formula["python@3.11"].opt_bin/"python3", "-c", "from empirica.cli.cli_core import main"
